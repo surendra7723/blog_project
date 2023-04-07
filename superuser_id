@@ -1,0 +1,3 @@
+username- acer
+pass-  on_delete=models.CASCADE,
+email- surendrathapa986@gmail.com
