@@ -1,9 +1,97 @@
-!-- templates/post_edit.html -->
+<!-- templates/post_edit.html -->
 {% extends "base.html" %}
+
+{% block title %}Edit Post - Django Blog{% endblock title %}
+
 {% block content %}
-<h1>Edit post</h1>
-<form action="" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Update">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="{% url 'post_detail' object.pk %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Post
+                </a>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container fade-in-up">
+                <h1>
+                    <i class="fas fa-edit me-2 text-primary"></i>Edit Post
+                </h1>
+                <p class="text-muted text-center mb-4">Update your post content</p>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Title Field -->
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">
+                            <i class="fas fa-heading me-2"></i>Title
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.title.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Body Field -->
+                    <div class="mb-4">
+                        <label for="{{ form.body.id_for_label }}" class="form-label fw-semibold">
+                            <i class="fas fa-align-left me-2"></i>Content
+                        </label>
+                        {{ form.body }}
+                        {% if form.body.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.body.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Update your post content here. You can use line breaks for paragraphs.
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-save me-2"></i>Update Post
+                            </button>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <a href="{% url 'post_detail' object.pk %}" class="btn btn-outline-secondary btn-lg w-100">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Custom form styling */
+#id_title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+#id_body {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.form-label {
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+</style>
 {% endblock content %}

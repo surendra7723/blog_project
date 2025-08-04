@@ -1,11 +1,72 @@
 <!-- templates/post_detail.html -->
 {% extends "base.html" %}
-{% block content %}
-<div class="post-entry">
-<h2>{{ post.title }}</h2>
-<p>{{ post.body }}</p>
-</div>
 
-<p><a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a></p>
-<p><a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></p>
+{% block title %}{{ post.title }} - Django Blog{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Posts
+                </a>
+            </div>
+
+            <!-- Post Content -->
+            <article class="post-detail fade-in-up">
+                <header class="mb-4">
+                    <h1 class="display-5 fw-bold mb-3">{{ post.title }}</h1>
+                    <div class="post-meta mb-4">
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="fas fa-user me-2"></i>
+                            <span class="me-3">by <strong>{{ post.author }}</strong></span>
+                            <i class="fas fa-calendar me-2"></i>
+                            <span>{{ post.created_at|date:"F d, Y" }}</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="post-body">
+                    {{ post.body|linebreaks }}
+                </div>
+            </article>
+
+            <!-- Action Buttons -->
+            {% if user == post.author %}
+            <div class="action-buttons mt-4 p-4 bg-light rounded">
+                <h5 class="mb-3">
+                    <i class="fas fa-cog me-2"></i>Manage Post
+                </h5>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{% url 'post_edit' post.pk %}" class="btn btn-outline-primary">
+                        <i class="fas fa-edit me-2"></i>Edit Post
+                    </a>
+                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger">
+                        <i class="fas fa-trash me-2"></i>Delete Post
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Navigation to other posts -->
+            <div class="mt-5 pt-4 border-top">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Previous post link would go here -->
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <!-- Next post link would go here -->
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% url 'home' %}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>View All Posts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

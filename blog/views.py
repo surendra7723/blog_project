@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Post
+from .forms import PostForm, PostEditForm
 
 
 class BlogListView(ListView):
@@ -18,13 +19,13 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     model = Post
     template_name = "post_new.html"
-    fields = ["title", "author", "body"]
+    form_class = PostForm
 
 
 class BlogUpdateView(UpdateView):  # new
     model = Post
     template_name = "post_edit.html"
-    fields = ["title", "body"]
+    form_class = PostEditForm
 
 
 class BlogDeleteView(DeleteView):
